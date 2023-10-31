@@ -16,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Map;
 
 
 @RequestMapping("/auth")
@@ -36,7 +37,7 @@ public class AuthController {
         var userPass = new UsernamePasswordAuthenticationToken(loginRequestDto.getUsername(), loginRequestDto.getPassword());
         var auth = this.authenticationManager.authenticate(userPass);
 
-        String token = this.jwtTokenService.generateToken((User) auth.getPrincipal());
+        String token = this.jwtTokenService.generateToken((User) auth.getPrincipal(), Map.of("temp01", "temp01"));
         return ResponseEntity.ok(new LoginResponseDto(token));
     }
 
